@@ -9,4 +9,14 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>Random_guess</display-name>
+    <servlet-name>Random_guess</servlet-name>
+    <servlet-class>Random_guess</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Random_guess</servlet-name>
+    <url-pattern>/Random_guess</url-pattern>
+  </servlet-mapping>
 </web-app>

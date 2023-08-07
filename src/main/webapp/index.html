@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Number Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    div {
+      margin: 20px auto;
+      max-width: 500px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+    }
+    table td {
+      padding: 5px;
+    }
+    input {
+      width: 100%;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      box-sizing: border-box;
+    }
+    #max {
+      border-color: red;
+    }
+    #max.valid {
+      border-color: green;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <form action="Random_guess" method="Post" onsubmit="return validateForm()">
+      <table>
+        <tr>
+          <td colspan="4">
+            <h1>Welcome to the Guessing Game! where the computer generates a random number within a given range, and you have to guess the number.</h1>
+          </td>
+        </tr>
+        <tr>
+          <td>Enter the range:</td>
+        </tr>
+        <tr>
+          <td>minimum:</td>
+          <td><input id="min" name="Min" placeholder="Enter min no"></td>
+          <td>maximum:</td>
+          <td><input id="max" name="Max" placeholder="Enter max no"></td>
+        </tr>
+        <tr>
+          <td colspan="4" style="text-align: center;">
+            <input type="submit" value="Start Game">
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+  <script>
+    function validateForm() {
+      const minInput = document.getElementById('min');
+      const maxInput = document.getElementById('max');
+
+      const min = parseInt(minInput.value);
+      const max = parseInt(maxInput.value);
+
+      if (max >= min + 10) {
+        maxInput.classList.remove('invalid');
+        maxInput.classList.add('valid');
+        return true;
+      } else {
+        maxInput.classList.remove('valid');
+        maxInput.classList.add('invalid');
+        return false;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -42,7 +42,7 @@
 </head>
 <body>
   <div>
-    <form action="Random_guess" method="Post" onsubmit="return validateForm()">
+    <form action="random_guess" method="post" onsubmit="return validateForm()" id="Numbergame">
       <table>
         <tr>
           <td colspan="4">
@@ -66,24 +66,34 @@
       </table>
     </form>
   </div>
+  <div id="msg">
+	  
+  </div>
+  </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    function validateForm() {
-      const minInput = document.getElementById('min');
-      const maxInput = document.getElementById('max');
+    $(document).ready(function() {
+      $("#Numbergame").on('submit', function(event) {
+        event.preventDefault();
 
-      const min = parseInt(minInput.value);
-      const max = parseInt(maxInput.value);
+        var formData = $(this).serialize();
 
-      if (max >= min + 10) {
-        maxInput.classList.remove('invalid');
-        maxInput.classList.add('valid');
-        return true;
-      } else {
-        maxInput.classList.remove('valid');
-        maxInput.classList.add('invalid');
-        return false;
-      }
-    }
+        $.ajax({
+          url: "random_guess",
+          data: formData,
+          type: 'POST',
+          success: function(data, textStatus, jqXHR) {
+            console.log(data);
+            console.log("Success...");
+            $("#msg").html(data);
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.responseText);
+            console.log("Error...");
+          }
+        });
+      });
+    });
   </script>
 </body>
 </html>

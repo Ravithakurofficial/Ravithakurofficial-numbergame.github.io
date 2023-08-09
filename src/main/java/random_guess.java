@@ -11,8 +11,9 @@ import java.util.Random;
 public class random_guess extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private int randomNum;
-    private int attempt = 4;
+    private int attempt = 5;
     private int a = 1;
+    
     public random_guess() {
         super();
     }
@@ -20,7 +21,7 @@ public class random_guess extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter pw = response.getWriter();
-        
+        request.setAttribute("latestA", a);
         String minStr = request.getParameter("Min");
         String maxStr = request.getParameter("Max");
         String userGuessStr = request.getParameter("userguess");
@@ -40,25 +41,30 @@ public class random_guess extends HttpServlet {
             
             attempt--;
             if (randomNum != userGuess && randomNum > userGuess) {
-                pw.println("low");
+                pw.println("<h1>your guess is low go for high Number</h1>");
+                
             } else if (randomNum != userGuess && randomNum < userGuess) {
-                pw.println("high");
+                pw.println("<h1>your guess is high go for low Number</h1>");
+                
             } else if (randomNum == userGuess) {
                 int a = 0;
-                
                 pw.println("<h1>Your Guess Is Correct</h1>");
-                pw.println("<h3 style=\"color: blue;\">Want to play again?</h3>");
+                pw.println("<h3 style=\"color: blue;\"><a href = \"index.html\">Want to play again?</a></h3>");
                 randomNum = 0;
-            	attempt = 4;
+            	attempt = 5;
+            	
                 
             } else {
-                pw.println("problem");
+                pw.println("<h1>problem</h1>");
             }
             
             if(attempt == 0) {
+            	attempt = 5;
+            	pw.println("<h1>Sorry You Are not able to guess</h1>");
+            	pw.println("<h3 style=\"color: blue;\"><a href = \"index.html\">play again?<a/></h3>");
+            	pw.println("<h2>Your Secret number is"+randomNum);
             	randomNum = 0;
-            	attempt = 4;
-            }
+            	}
             
         } catch (NumberFormatException e) {
             pw.println("<p>Invalid input. Please enter valid numbers.</p>");

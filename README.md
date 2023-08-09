@@ -1,4 +1,4 @@
-# CODSOFT
+# CODSOFT task 1
 					TASK 1
 				      ----------
 

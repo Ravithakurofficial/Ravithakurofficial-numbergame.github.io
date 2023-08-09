@@ -10,7 +10,8 @@ import java.util.Random;
 @WebServlet("/random_guess")
 public class random_guess extends HttpServlet {
     private static final long serialVersionUID = 1L;
-       
+    private int randomNum; // Store the generated random number
+    
     public random_guess() {
         super();
     }
@@ -18,36 +19,31 @@ public class random_guess extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter pw = response.getWriter();
-
+        
         String minStr = request.getParameter("Min");
         String maxStr = request.getParameter("Max");
-        String Userstr = request.getParameter("userguess");
+        String userGuessStr = request.getParameter("userguess");
         
         try {
             int min = Integer.parseInt(minStr);
             int max = Integer.parseInt(maxStr);
-            int userin = Integer.parseInt(Userstr);
+            int userGuess = Integer.parseInt(userGuessStr);
             
+            if (randomNum == 0) {
+                Random randomValue = new Random();
+                randomNum = randomValue.nextInt(max - min + 1) + min;
+                System.out.println("Secret number is " + randomNum);
+            }
             
-            pw.println("<h1>Welcome to the Guessing Game!</h1>");
-            //pw.println("Entered minimum number: " + min);
-            //pw.println("Entered maximum number: " + max);
-            //pw.println("user guess"+userin);
-            Random randomValue = new Random();
-            int random = randomValue.nextInt(max - min + 1) + min;
-            pw.println("Secret number is " +random);
-            
-            if(random != userin && random > userin){
-            	pw.println("your guess is low");
-            }
-            else if(random != userin && random < userin) {
-            	pw.println("Your guess is high");
-            }
-            else if(random == userin) {
-            	pw.println("Your guess is correct");
-            }
-            else {
-            	pw.println("other problem");
+            if (randomNum != userGuess && randomNum > userGuess) {
+                pw.println("low");
+            } else if (randomNum != userGuess && randomNum < userGuess) {
+                pw.println("high");
+            } else if (randomNum == userGuess) {
+                int a = 0;
+                pw.println(a);
+            } else {
+                pw.println("problem");
             }
         } catch (NumberFormatException e) {
             pw.println("<p>Invalid input. Please enter valid numbers.</p>");

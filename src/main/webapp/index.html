@@ -31,6 +31,7 @@
       border: 1px solid #ccc;
       border-radius: 3px;
       box-sizing: border-box;
+      cursor: pointer;
     }
     #max {
       border-color: red;
@@ -38,11 +39,12 @@
     #max.valid {
       border-color: green;
     }
+    
   </style>
 </head>
 <body>
   <div>
-    <form action="random_guess" method="post" onsubmit="return validateForm()" id="Numbergame">
+    <form action="random_guess" method="post" id="Numbergame">
       <table>
         <tr>
           <td colspan="4">
@@ -60,7 +62,7 @@
         </tr>
         <tr>
 			<td>User Guess :</td>
-			<td><input id="userguess" name = "userguess" placeholder="Enter userguess"></td>
+			<td><input id="userguess" name="userguess" placeholder="Enter userguess"></td>
 		</tr>
         <tr>
           <td colspan="4" style="text-align: center;">
@@ -70,11 +72,22 @@
       </table>
     </form>
   </div>
-  <div id="msg">
-	  
+  <div>
+    <table>
+      <tr>
+        <td>
+          <input id="useragainguess" name="useraganiguess" placeholder="Enter userguess" style="visibility: hidden" class="visible">
+        </td>
+      </tr>
+      <tr>
+		 <td colspan="4" style="text-align: center;">
+         <input type="submit" value="Submit your guess again" style="visibility: hidden" class="visible">
+         </td>
+	  </tr>
+    </table>
   </div>
-  </script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <div id="msg"></div>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function() {
       $("#Numbergame").on('submit', function(event) {
@@ -88,8 +101,18 @@
           type: 'POST',
           success: function(data, textStatus, jqXHR) {
             console.log(data);
-            console.log("Success...");
-            $("#msg").html(data);
+            
+            var b = 0;
+
+            if (data == b) {
+              console.log("Your Guess is correct");
+              $("#msg").text("Your Guess is correct"); 
+              $(".visible").css("visibility", "hidden");
+            } else {
+              $(".visible").css("visibility", "visible");
+              $("#useragainguess").val(""); 
+              $("#msg").text(data);
+            }
           },
           error: function(jqXHR, textStatus, errorThrown) {
             console.log(jqXHR.responseText);
@@ -98,8 +121,6 @@
         });
       });
     });
-    
-    
   </script>
 </body>
 </html>

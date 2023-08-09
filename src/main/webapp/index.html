@@ -72,21 +72,13 @@
       </table>
     </form>
   </div>
-  <div>
-    <table>
-      <tr>
-        <td>
-          <input id="useragainguess" name="useraganiguess" placeholder="Enter userguess" style="visibility: hidden" class="visible">
-        </td>
-      </tr>
-      <tr>
-		 <td colspan="4" style="text-align: center;">
-         <input type="submit" value="Submit your guess again" style="visibility: hidden" class="visible">
-         </td>
-	  </tr>
-    </table>
-  </div>
-  <div id="msg"></div>
+  
+   <div id="msg">
+	   
+	   
+	   
+   </div>
+
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function() {
@@ -103,16 +95,8 @@
             console.log(data);
             
             var b = 0;
+            $("#msg").html(data);
 
-            if (data == b) {
-              console.log("Your Guess is correct");
-              $("#msg").text("Your Guess is correct"); 
-              $(".visible").css("visibility", "hidden");
-            } else {
-              $(".visible").css("visibility", "visible");
-              $("#useragainguess").val(""); 
-              $("#msg").text(data);
-            }
           },
           error: function(jqXHR, textStatus, errorThrown) {
             console.log(jqXHR.responseText);

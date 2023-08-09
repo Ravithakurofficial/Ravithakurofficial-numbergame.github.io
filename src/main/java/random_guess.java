@@ -10,8 +10,9 @@ import java.util.Random;
 @WebServlet("/random_guess")
 public class random_guess extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private int randomNum; // Store the generated random number
-    
+    private int randomNum;
+    private int attempt = 4;
+    private int a = 1;
     public random_guess() {
         super();
     }
@@ -29,22 +30,36 @@ public class random_guess extends HttpServlet {
             int max = Integer.parseInt(maxStr);
             int userGuess = Integer.parseInt(userGuessStr);
             
+            
+            
             if (randomNum == 0) {
                 Random randomValue = new Random();
                 randomNum = randomValue.nextInt(max - min + 1) + min;
                 System.out.println("Secret number is " + randomNum);
             }
             
+            attempt--;
             if (randomNum != userGuess && randomNum > userGuess) {
                 pw.println("low");
             } else if (randomNum != userGuess && randomNum < userGuess) {
                 pw.println("high");
             } else if (randomNum == userGuess) {
                 int a = 0;
-                pw.println(a);
+                
+                pw.println("<h1>Your Guess Is Correct</h1>");
+                pw.println("<h3 style=\"color: blue;\">Want to play again?</h3>");
+                randomNum = 0;
+            	attempt = 4;
+                
             } else {
                 pw.println("problem");
             }
+            
+            if(attempt == 0) {
+            	randomNum = 0;
+            	attempt = 4;
+            }
+            
         } catch (NumberFormatException e) {
             pw.println("<p>Invalid input. Please enter valid numbers.</p>");
         }

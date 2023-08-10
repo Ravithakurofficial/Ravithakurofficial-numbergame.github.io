@@ -47,10 +47,16 @@
   <div>
     <form action="random_guess" method="post" id="Numbergame">
       <table>
+		  <div id="attempts" style="width: 10rem; height: 1rem; margin-left: 18rem; margin-top: 0.1rem;"> </div>
+		  <div id="Points" style="width: 10rem; height: 1rem; margin-left: 1rem; margin-top: -4.65rem;">
+			      Your Score: <span id="userPoints">0</span>
+		  </div>
+
         <tr>
           <td colspan="4">
             <h1>Welcome to the Guessing Game! where the computer generates a random number within a given range, and you have to guess the number.</h1>
           </td>
+          
         </tr>
         <tr>
           <td>Enter the range:</td>
@@ -73,37 +79,60 @@
     </form>
   </div>
   
-   <div id="msg">
-	   
-	   
+  <div id="msg">
 	   
    </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    var attempt = 5;
+    var userPoints = 0;
 
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
     $(document).ready(function() {
-      $("#Numbergame").on('submit', function(event) {
-        event.preventDefault();
+        if (attempt === 5) {
+            $("#attempts").html("Attempts Left: " + attempt);
+            attempt = 4;
+        }
 
-        var formData = $(this).serialize();
+        $("#Numbergame").on('submit', function(event) {
+            event.preventDefault();
+            $("#attempts").html("Attempts Left: " + attempt);
+            attempt--;
 
-        $.ajax({
-          url: "random_guess",
-          data: formData,
-          type: 'POST',
-          success: function(data, textStatus, jqXHR) {
-            console.log(data);
-            $("#msg").html(data);
-            
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR.responseText);
-            console.log("Error...");
-          }
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: "random_guess",
+                data: formData,
+                type: 'POST',
+                success: function(data, textStatus, jqXHR) {
+                    //console.log(data);
+                    
+
+                    var correctMessage = 1;
+
+                    if (data == correctMessage) {
+                        userPoints = (attempt * 3)*2;
+                        $("#msg").html("<h1>Your Guess Is Correct</h1><br><h3 style=\"color: blue;\"><a href = \"index.html\">Want to play again?</a></h3>");
+                    } else {
+                        userPoints = 0;
+                        $("#msg").html(data);
+                    }
+
+                    $("#userPoints").text(userPoints);
+
+                    if (attempt == 0) {
+                        $("#Points").html("Your Score: 0");
+                        attempt = 5;
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR.responseText);
+                    console.log("Error...");
+                }
+            });
         });
-      });
     });
-    
-  </script>
+</script>
+
 </body>
 </html>

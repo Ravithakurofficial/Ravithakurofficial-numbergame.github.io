@@ -47,9 +47,10 @@ public class random_guess extends HttpServlet {
                 pw.println("<h1>your guess is high go for low Number</h1>");
                 
             } else if (randomNum == userGuess) {
-                int a = 0;
-                pw.println("<h1>Your Guess Is Correct</h1>");
-                pw.println("<h3 style=\"color: blue;\"><a href = \"index.html\">Want to play again?</a></h3>");
+                int a = 1;
+                pw.println(a);
+               // pw.println("<h1>Your Guess Is Correct</h1>");
+               // pw.println("<h3 style=\"color: blue;\"><a href = \"index.html\">Want to play again?</a></h3>");
                 randomNum = 0;
             	attempt = 5;
             	
